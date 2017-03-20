@@ -4,9 +4,16 @@
     android:layout_height="match_parent"
     tools:context="com.github.fdxxw.mitmstu.activity.MainActivity" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+    <Button android:id="@+id/scan_lan_btn"
+	    android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="5.0dip"
+            android:gravity="center"
+            android:padding="14.0dip"
+            android:text="扫描局域网主机"
+            android:textColor="#ffffffff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
 </RelativeLayout>

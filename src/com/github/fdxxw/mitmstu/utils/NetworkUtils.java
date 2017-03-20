@@ -14,8 +14,6 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.http.conn.util.InetAddressUtils;
 
@@ -33,7 +31,25 @@ public class NetworkUtils {
     
     
      
-     
+      
+    /** 
+     * 获取网关地址
+     * @author fdxxw ucmxxw@163.com
+     * @return  
+     */
+      	
+    public static String getGateway() {
+         String gateway = null;
+         try {
+            String netInterface = NetworkInterface.getByInetAddress(getInetAddress()).getDisplayName();
+            CommandResult result = ShellUtils.execCommand("getprop dhcp." + netInterface + ".gateway", false, true, true);
+            gateway = result.successMsg;
+        } catch (SocketException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+         return gateway;
+     }
      
     /** 
      * @Description ip地址转int
@@ -42,9 +58,9 @@ public class NetworkUtils {
      * @return  int
      */
       	
-    public static int ipToint(String ipAddress) { 
+    public static long ipToint(String ipAddress) { 
         
-        int result = 0;  
+        long result = 0;  
           
         String[] ipAddressInArray = ipAddress.split("\\.");  
           
@@ -72,7 +88,7 @@ public class NetworkUtils {
      * @return  String
      */
       	
-    public static String intToIp2(int ip) {  
+    public static String intToIp2(long ip) {  
         
         return ((ip >> 24) & 0xFF) + "."   
             + ((ip >> 16) & 0xFF) + "."   
@@ -160,7 +176,7 @@ public class NetworkUtils {
      * @param int_ip
      * @return
      */
-    public static int nextIntIp(int int_ip) {
+    public static long nextIntIp(long int_ip) {
         int next_ip = -1;
         byte[] ip_byte = intIpToByte(int_ip);
         int i = ip_byte.length - 1;
@@ -185,7 +201,7 @@ public class NetworkUtils {
      * @param int_ip
      * @return
      */
-    public static byte[] intIpToByte(int int_ip) {
+    public static byte[] intIpToByte(long int_ip) {
         byte[] ip_byte = new byte[4];
 
         ip_byte[3] = (byte) (int_ip & 0xff);
@@ -228,4 +244,55 @@ public class NetworkUtils {
         }
         return inetAddress;
     }
+    
+    /**
+     * String mac转byte[]
+     * 
+     * @param mac_string
+     * @return
+     */
+    public static byte[] stringMacToByte(String mac_string) {
+        byte[] mac_byte = new byte[6];
+        if (mac_string == null)
+            return mac_byte;
+        String[] mac_strs = mac_string.split(":");
+        if (mac_strs.length != 6) {
+            mac_strs = mac_string.split("-");
+        }
+        for (int i = 0; i < 6; i++) {
+            mac_byte[i] = Integer.valueOf(mac_strs[i], 16).byteValue();
+        }
+        return mac_byte;
+    }
+
+    /*public static String vendorFromMac(byte[] mac) {
+        if (mVendors == null) {
+            try {
+                mVendors = new HashMap<String, String>();
+                InputStream is = AppContext.getContext().getAssets()
+                        .open("nmap-mac-prefixes");
+                DataInputStream in = new DataInputStream(is);
+                BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(in));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    line = line.trim();
+                    if (!line.startsWith("#") && !line.isEmpty()) {
+                        String[] tokens = line.split(" ", 2);
+                        if (tokens.length == 2)
+                            mVendors.put(tokens[0], tokens[1]);
+                    }
+                }
+                in.close();
+                is.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (mac != null && mac.length >= 3)
+            return mVendors.get(String.format("%02X%02X%02X", mac[0], mac[1],
+                    mac[2]));
+        else
+            return null;
+    }*/
 }

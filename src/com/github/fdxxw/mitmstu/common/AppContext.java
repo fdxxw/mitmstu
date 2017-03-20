@@ -12,6 +12,7 @@ package com.github.fdxxw.mitmstu.common;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.SocketException;
 
 import com.github.fdxxw.mitmstu.entity.LanHost;
 import com.github.fdxxw.mitmstu.utils.NetworkUtils;
@@ -36,12 +37,12 @@ public class AppContext extends Application {
     
     private static InetAddress mInetAddress;
     
-    private static int int_ip;
-    private static int int_gateway;
-    private static int int_net_mask;
+    private static long int_ip;
+    private static long int_gateway;
+    private static long int_net_mask;
     private static LanHost target = null;
     private static String gatewayMac;
-    
+    private static String netInterface;
     
     /**
      * Description 程序入口  
@@ -54,13 +55,22 @@ public class AppContext extends Application {
         
         mContext = this;
         
+        initNetInfo();
     }
     
     public void initNetInfo() {
         
         mInetAddress = NetworkUtils.getInetAddress();
         
-        int_ip = NetworkUtils.byteIpToInt(mInetAddress.getAddress());
+        int_ip = NetworkUtils.ipToint(mInetAddress.getHostAddress());
+        int_net_mask = NetworkUtils.ipToint(NetworkUtils.getMaskFromBit(NetworkUtils.getMaskBitByIp(mInetAddress.getHostAddress())));
+        int_gateway = NetworkUtils.ipToint(NetworkUtils.getGateway());
+        try {
+            netInterface = NetworkInterface.getByInetAddress(mInetAddress).getDisplayName();
+        } catch (SocketException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
 
@@ -84,7 +94,7 @@ public class AppContext extends Application {
     }
 
 
-    public static int getInt_ip() {
+    public static long getInt_ip() {
         return int_ip;
     }
 
@@ -94,7 +104,7 @@ public class AppContext extends Application {
     }
 
 
-    public static int getInt_gateway() {
+    public static long getInt_gateway() {
         return int_gateway;
     }
 
@@ -104,12 +114,12 @@ public class AppContext extends Application {
     }
 
 
-    public static int getInt_mac() {
+    public static long getInt_net_mask() {
         return int_net_mask;
     }
 
 
-    public static void setInt_mac(int int_mac) {
+    public static void setInt_net_mask(int int_mac) {
         AppContext.int_net_mask = int_mac;
     }
 
@@ -131,6 +141,18 @@ public class AppContext extends Application {
 
     public static void setGatewayMac(String gatewayMac) {
         AppContext.gatewayMac = gatewayMac;
+    }
+    
+    public static int getHostCount() {
+        return NetworkUtils.getHostCount(NetworkUtils.getMaskBitByIp(mInetAddress.getHostAddress()));
+    }
+
+    public static String getNetInterface() {
+        return netInterface;
+    }
+
+    public static void setNetInterface(String netInterface) {
+        AppContext.netInterface = netInterface;
     }
     
     
