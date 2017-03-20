@@ -10,15 +10,12 @@
 
 package com.github.fdxxw.mitmstu.activity;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,7 +31,6 @@ import com.github.fdxxw.mitmstu.utils.ShellUtils;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -109,6 +105,10 @@ public class HostsActivity extends Activity {
             }
         });
         
+        mHosts.clear();
+        LanHost myself = new LanHost(NetworkUtils.intToIp2(AppContext.getInt_ip()), AppContext.getMac());
+        mHosts.add(myself);
+        
     }
     
     public static class HostHandler extends WeakHandler<HostsActivity> {
@@ -156,72 +156,70 @@ public class HostsActivity extends Activity {
       	
     class ArpReaderThread extends Thread {
         ExecutorService executor;
-        /**
-         * Description  
-         * @see java.lang.Thread#run() 
-         */ 
-        	
-        @Override
+
         public void run() {
-            /*if(null != executor && !executor.isShutdown()) {
+            if (executor != null && !executor.isShutdown()) {
                 executor.shutdownNow();
                 executor = null;
             }
-            executor = Executors.newFixedThreadPool(5);*/
-            BufferedReader buffReader = null;
+            executor = Executors.newFixedThreadPool(5);
+
+            RandomAccessFile fileReader = null;
             try {
+                fileReader = new RandomAccessFile("/proc/net/arp", "r");
+                StringBuilder sb = new StringBuilder();
+                int len = -1;
                 String line = null;
                 Matcher matcher = null;
 
-                while (!stop) {
-                    buffReader = new BufferedReader(new FileReader(new File("/proc/net/arp")));
-                    while (!stop && (line = buffReader.readLine()) != null) {
-                        /*sb.append((char) len);
-                        if (len != '\n')
-                            continue;
-                        line = sb.toString();
-                        sb.setLength(0);*/
-                        line = line.trim();
-                        if ((matcher = ARP_TABLE_PARSER.matcher(line)) != null && matcher.find()) {
-                            String address = matcher.group(1), flags = matcher.group(3), hwaddr = matcher.group(4), device = matcher.group(6);
-                            if (device.equals(netInterface) && !hwaddr.equals("00:00:00:00:00:00") && flags.contains("2")) {
-
-                                synchronized (HostsActivity.class) {
-
-                                    boolean contains = false;
-                                        
-                                    for (LanHost h : mCheckHosts) {
-                                        if (h.getMac().equals(hwaddr) || h.getIp().equals(address)) {
-                                            contains = true;
-                                            break;
+                synchronized (HostsActivity.class) {
+                    while (!stop) {
+                        fileReader.seek(0);
+                        while (!stop && (len = fileReader.read()) >= 0) {
+                            sb.append((char) len);
+                            if (len != '\n')
+                                continue;
+                            line = sb.toString();
+                            sb.setLength(0);
+    
+                            if ((matcher = ARP_TABLE_PARSER.matcher(line)) != null && matcher.find()) {
+                                String address = matcher.group(1), flags = matcher.group(3), hwaddr = matcher.group(4), device = matcher.group(6);
+                                if (device.equals(netInterface) && !hwaddr.equals("00:00:00:00:00:00") && flags.contains("2")) {
+    
+    
+                                        boolean contains = false;
+    
+                                        for (LanHost h : mCheckHosts) {
+                                            if (h.getMac().equals(hwaddr) || h.getIp().equals(address)) {
+                                                contains = true;
+                                                break;
+                                            }
                                         }
-                                    }
-                                    if (!contains) {
-                                        byte[] mac_bytes = NetworkUtils.stringMacToByte(hwaddr);
-                                        //String vendor = NetworkUtils.vendorFromMac(mac_bytes);
-                                        LanHost host = new LanHost(hwaddr, address, "");
-                                        Log.i("host", address+hwaddr);
-                                        mCheckHosts.add(host);
-                                        mHandler.obtainMessage(DATA_CHANGED, host).sendToTarget();
-                                       // executor.execute(new RecvThread(address));
+                                        if (!contains) {
+                                            byte[] mac_bytes = NetworkUtils.stringMacToByte(hwaddr);
+                                            //String vendor = NetworkUtils.vendorFromMac(mac_bytes);
+                                            LanHost host = new LanHost(address, hwaddr, "");
+                                            mCheckHosts.add(host);
+                                            mHandler.obtainMessage(DATA_CHANGED, host).sendToTarget();
+                                            //executor.execute(new RecvThread(address));
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                    Thread.sleep(3000);
+                        Thread.sleep(3000);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
                 try {
-                    if (buffReader != null)
-                        buffReader.close();
+                    if (fileReader != null)
+                        fileReader.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-               /* if (executor != null)
-                    executor.shutdownNow();*/
+                if (executor != null)
+                    executor.shutdownNow();
             }
         }
     }

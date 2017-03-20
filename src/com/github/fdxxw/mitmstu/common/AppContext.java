@@ -40,6 +40,7 @@ public class AppContext extends Application {
     private static long int_ip;
     private static long int_gateway;
     private static long int_net_mask;
+    private static String mac;
     private static LanHost target = null;
     private static String gatewayMac;
     private static String netInterface;
@@ -67,6 +68,7 @@ public class AppContext extends Application {
         int_gateway = NetworkUtils.ipToint(NetworkUtils.getGateway());
         try {
             netInterface = NetworkInterface.getByInetAddress(mInetAddress).getDisplayName();
+            mac = NetworkUtils.byteMacToStr(NetworkInterface.getByInetAddress(mInetAddress).getHardwareAddress());
         } catch (SocketException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -153,6 +155,14 @@ public class AppContext extends Application {
 
     public static void setNetInterface(String netInterface) {
         AppContext.netInterface = netInterface;
+    }
+
+    public static String getMac() {
+        return mac;
+    }
+
+    public static void setMac(String mac) {
+        AppContext.mac = mac;
     }
     
     

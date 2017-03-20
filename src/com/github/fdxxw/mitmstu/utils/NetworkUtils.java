@@ -264,6 +264,32 @@ public class NetworkUtils {
         }
         return mac_byte;
     }
+    
+     
+    /** 
+     * @Description byte的Mac转String
+     * @author fdxxw ucmxxw@163.com
+     * @param byteMac
+     * @return  
+     */
+      	
+    public static String byteMacToStr(byte[] macBytes) {
+        StringBuilder value = new StringBuilder();
+        for(int i = 0;i < macBytes.length; i++){
+            String sTemp = "";
+            if((0xFF &  macBytes[i]) < 0x0F) {
+                
+                sTemp = "0" + Integer.toHexString(0xFF &  macBytes[i]);
+            } else {
+                
+                sTemp = Integer.toHexString(0xFF &  macBytes[i]);
+            }
+         value.append(sTemp+":");
+        }
+          
+        value.substring(0,value.lastIndexOf(":"));
+        return value.toString();
+    } 
 
     /*public static String vendorFromMac(byte[] mac) {
         if (mVendors == null) {
