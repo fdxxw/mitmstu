@@ -29,6 +29,7 @@ import com.github.fdxxw.mitmstu.utils.NetworkUtils;
 import com.github.fdxxw.mitmstu.utils.ShellUtils;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
@@ -92,16 +93,18 @@ public class HostsActivity extends Activity {
         hostListView.setOnItemClickListener(new OnItemClickListener() {
             /**
              * Description 
-             * @param arg0
-             * @param arg1
-             * @param arg2
-             * @param arg3 
+             * @param parent
+             * @param view
+             * @param position
+             * @param id
              * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget.AdapterView, android.view.View, int, long) 
              */ 
             	
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LanHost target = (LanHost)parent.getItemAtPosition(position);
+                AppContext.setTarget(target);
+                startActivity(new Intent(HostsActivity.this, MitmActivity.class));
             }
         });
         

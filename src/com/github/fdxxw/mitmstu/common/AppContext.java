@@ -43,6 +43,15 @@ public class AppContext extends Application {
     private static String mac;
     private static LanHost target = null;
     private static String gatewayMac;
+    
+    
+    /** 断网攻击服务是否在运行，默认不运行 */
+      	
+    public static boolean isBrokenNetworkRunning = false;
+    
+    /** 
+     * 网卡接口名 ,example:eth0
+     */  	
     private static String netInterface;
     
     /**
@@ -165,6 +174,8 @@ public class AppContext extends Application {
         AppContext.mac = mac;
     }
     
-    
+    public static String getGateway() {
+        return NetworkUtils.intToIp2(int_gateway);
+    }
     
 }

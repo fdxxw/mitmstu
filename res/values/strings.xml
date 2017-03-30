@@ -4,5 +4,6 @@
     <string name="app_name">mitmstu</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
+	<string name="broken_network_name">断网攻击</string>
+	<string name="broken_network_tips">对目标主机进行断网攻击，使其不能上网</string>
 </resources>

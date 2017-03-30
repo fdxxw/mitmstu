@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+	<RelativeLayout
+	    android:id="@+id/mitm_broken_network" 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="left"
+	    android:background="#ff171c20"
+	    android:padding="10.0dip"
+	    android:orientation="horizontal">
+	   
+	    <TextView 
+	        android:id="@+id/mitm_broken_network_head"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:text="@string/broken_network_name"
+	        android:gravity="left"
+	        android:paddingTop="4.0dip"
+	        android:textColor="#ffffffff"
+	        android:textSize="18sp"/>
+	    <TextView 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/mitm_broken_network_head"
+	        android:gravity="left"
+	        android:text="@string/broken_network_tips"
+	        android:textColor="#ffffffcc"
+	        android:textSize="13sp"/>
+	</RelativeLayout>
+    
+</LinearLayout>

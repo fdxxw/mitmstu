@@ -25,6 +25,9 @@
             </intent-filter>
         </activity>
         <activity android:name="com.github.fdxxw.mitmstu.activity.HostsActivity"></activity>
+        <activity android:name="com.github.fdxxw.mitmstu.activity.MitmActivity"></activity>
+        <activity android:name="com.github.fdxxw.mitmstu.activity.BrokenNetworkActivity" ></activity>
+        <service android:name="com.github.fdxxw.mitmstu.service.ArpService"></service>
         <uses-library android:name="android.test.runner" />
     </application>
 	<instrumentation android:name="android.test.InstrumentationTestRunner"
