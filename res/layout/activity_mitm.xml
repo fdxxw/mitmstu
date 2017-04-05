@@ -28,7 +28,7 @@
 	        android:layout_below="@id/mitm_broken_network_head"
 	        android:gravity="left"
 	        android:text="@string/broken_network_tips"
-	        android:textColor="#ffffffcc"
+	        android:textColor="@color/tip"
 	        android:textSize="13sp"/>
 	</RelativeLayout>
     

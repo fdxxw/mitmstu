@@ -42,7 +42,7 @@
             android:id="@+id/host_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="#ff000000"
+            android:divider="@color/sideorbottom"
             android:dividerHeight="1.0dip" />
     </LinearLayout>
 

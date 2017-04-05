@@ -36,7 +36,7 @@ public class BrokenNetworkActivity extends Activity {
         setContentView(R.layout.activity_broken_network);
         Intent intent = new Intent(BrokenNetworkActivity.this, ArpService.class);
         intent.putExtra("arpChratWay", ArpService.ONE_WAY_HOST);
-        startService(intent);
+        //startService(intent);
         AppContext.isBrokenNetworkRunning = true;
         brokenNetInfo = (TextView)findViewById(R.id.broken_network_info);
         LanHost target = AppContext.getTarget();

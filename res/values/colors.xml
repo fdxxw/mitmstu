@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 常用主色 -->
+    <color name="decorate">#009688</color><!-- 通常用于按钮、及任何修饰元素 -->
+    <color name="selected">#5FB878</color><!-- 一般用于选中状态 -->
+    <color name="navigation">#393D49</color><!-- 通常用于导航 -->
+    <color name="colorful">#1E9FFF</color><!-- 通常用于导航 -->
+    <!-- 场景色 -->
+    <color name="tip">#F7B824</color><!-- 暖色系，一般用于提示性元素 -->
+    <color name="attention" >#FF5722</color><!-- 比较引人注意的颜色 -->
+    <color name="textcolor">#01AAED</color><!-- 用于文字着色，如链接文本 -->
+    <color name="sideorbottom">#2F4056</color><!-- 侧边或底部普遍采用的颜色 -->
+    
+    <!-- 极简中性色 -->
+    <!-- 灰色系代表极简 他们一般用于背景、边框等 -->
+    <color name="grey1">#fbfbfb</color>
+    <color name="grey2">#f2f2f2</color>
+    <color name="grey3">#eeeeee</color>
+    <color name="grey4">#e2e2e2</color>
+    <color name="grey5">#dddddd</color>
+    <color name="grey6">#d2d2d2</color>
+    <color name="grey7">#c2c2c2</color>
+</resources>
