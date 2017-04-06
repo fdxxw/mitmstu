@@ -16,17 +16,17 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.widget.Checkable;
-import android.widget.TextView;
 
 
 /**
  * SwitchButton.
  */
-public class SwitchButton extends TextView implements Checkable {
+public class SwitchButton extends View implements Checkable {
     private static final int DEFAULT_WIDTH = dp2pxInt(58);
     private static final int DEFAULT_HEIGHT = dp2pxInt(36);
 

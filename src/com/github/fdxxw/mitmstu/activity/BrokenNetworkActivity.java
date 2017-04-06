@@ -14,6 +14,7 @@ import com.github.fdxxw.mitmstu.R;
 import com.github.fdxxw.mitmstu.common.AppContext;
 import com.github.fdxxw.mitmstu.entity.LanHost;
 import com.github.fdxxw.mitmstu.service.ArpService;
+import com.suke.widget.SwitchButton;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -30,19 +31,43 @@ public class BrokenNetworkActivity extends Activity {
     
     private TextView brokenNetInfo;
     
+    private SwitchButton switchButton;
+    
+    private Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        intent = new Intent(BrokenNetworkActivity.this, ArpService.class);
         setContentView(R.layout.activity_broken_network);
-        Intent intent = new Intent(BrokenNetworkActivity.this, ArpService.class);
         intent.putExtra("arpChratWay", ArpService.ONE_WAY_HOST);
-        //startService(intent);
-        AppContext.isBrokenNetworkRunning = true;
+        switchButton = (SwitchButton)findViewById(R.id.switch_button);  //开关
+        
+        if(AppContext.isBrokenNetworkRunning) {
+            switchButton.setChecked(true);
+        } else {
+            
+            switchButton.setChecked(false);
+        }
         brokenNetInfo = (TextView)findViewById(R.id.broken_network_info);
         LanHost target = AppContext.getTarget();
         if(target != null) {
             
             brokenNetInfo.append("被攻击者ip:" + target.getIp() + "\n被攻击者MAC:" + target.getMac());
         }
+        
+        switchButton.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
+            
+            @Override
+            public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+                if(isChecked) {
+                    AppContext.isBrokenNetworkRunning = true;
+                    startService(intent);
+                    
+                } else {
+                    AppContext.isBrokenNetworkRunning = false;
+                    stopService(intent);
+                }
+            }
+        });
     }
 }

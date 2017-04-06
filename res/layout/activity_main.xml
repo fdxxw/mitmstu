@@ -16,6 +16,6 @@
             android:textColor="#ffffffff"
             android:textSize="20sp"
             android:textStyle="bold" 
-            android:background="@color/decorate"/>
+            android:background="@drawable/shape"/>
 
 </RelativeLayout>
