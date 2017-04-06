@@ -251,7 +251,7 @@ public class HostsActivity extends Activity {
                     if(next_int_ip != -1) {
                         String ip = NetworkUtils.intToIp2(next_int_ip);
                         ShellUtils.execCommand(ping + " " + ip, false, false, true);
-                        Thread.sleep(500);
+                        //Thread.sleep(500);
                     }
                 } 
             } catch(Exception e) {
