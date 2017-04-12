@@ -13,6 +13,7 @@ package com.github.fdxxw.mitmstu.activity;
 import com.github.fdxxw.mitmstu.R;
 import com.github.fdxxw.mitmstu.common.AppContext;
 import com.github.fdxxw.mitmstu.service.ArpService;
+import com.github.fdxxw.mitmstu.service.SniffService;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -33,6 +34,7 @@ public class MitmActivity extends Activity implements OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mitm);
         findViewById(R.id.mitm_broken_network).setOnClickListener(this);
+        findViewById(R.id.mitm_sniff).setOnClickListener(this);
     }
     
     	
@@ -52,6 +54,12 @@ public class MitmActivity extends Activity implements OnClickListener{
             
             startActivity(new Intent(MitmActivity.this,BrokenNetworkActivity.class));
             break;
+        }
+        case R.id.mitm_sniff : {
+            if(AppContext.isSniffRunning) {
+                stopService(new Intent(MitmActivity.this,SniffService.class));
+            }
+            startActivity(new Intent(MitmActivity.this,SniffActivity.class));
         }
         default : break;
         }

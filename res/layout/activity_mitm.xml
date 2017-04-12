@@ -32,5 +32,33 @@
 	        android:textColor="@color/tip"
 	        android:textSize="13sp"/>
 	</RelativeLayout>
+	<RelativeLayout
+	    android:id="@+id/mitm_sniff" 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="left"
+	    android:layout_margin="1dip"
+	    android:background="#ff171c20"
+	    android:padding="10.0dip"
+	    android:orientation="horizontal">
+	   
+	    <TextView 
+	        android:id="@+id/mitm_sniff_head"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:text="@string/sniff_name"
+	        android:gravity="left"
+	        android:paddingTop="4.0dip"
+	        android:textColor="#ffffffff"
+	        android:textSize="18sp"/>
+	    <TextView 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/mitm_sniff_head"
+	        android:gravity="left"
+	        android:text="@string/sniff_tips"
+	        android:textColor="@color/tip"
+	        android:textSize="13sp"/>
+	</RelativeLayout>
     
 </LinearLayout>

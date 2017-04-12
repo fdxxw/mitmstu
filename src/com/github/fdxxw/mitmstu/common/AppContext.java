@@ -19,6 +19,7 @@ import com.github.fdxxw.mitmstu.utils.NetworkUtils;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Environment;
 
 /** 
  * @Description 全局
@@ -26,6 +27,12 @@ import android.content.Context;
  * @date 2017年3月16日 下午7:54:12 
  */
 
+/** 
+ * @Description 
+ * @author fdxxw ucmxxw@163.com
+ * @date 2017年4月10日 上午11:40:32 
+ */ 
+  	
 public class AppContext extends Application {
     
     private Context mContext;
@@ -45,9 +52,19 @@ public class AppContext extends Application {
     private static String gatewayMac;
     
     
+    /** 存储路径，sdcard*/
+      	
+    private static String mStoragePath; 
+    
+    
     /** 断网攻击服务是否在运行，默认不运行 */
       	
     public static boolean isBrokenNetworkRunning = false;
+    
+    
+    /** 数据嗅探服务是否在运行，默认不运行 */
+      	
+    public static boolean isSniffRunning = false;
     
     /** 
      * 网卡接口名 ,example:eth0
@@ -64,6 +81,7 @@ public class AppContext extends Application {
         super.onCreate();
         
         mContext = this;
+        mStoragePath = Environment.getExternalStorageDirectory().toString();
         
         initNetInfo();
     }
@@ -113,7 +131,10 @@ public class AppContext extends Application {
     public static void setInt_ip(int int_ip) {
         AppContext.int_ip = int_ip;
     }
-
+    
+    public static String getStringIp() {
+        return NetworkUtils.intToIp2(int_ip);
+    }
 
     public static long getInt_gateway() {
         return int_gateway;
@@ -177,5 +198,14 @@ public class AppContext extends Application {
     public static String getGateway() {
         return NetworkUtils.intToIp2(int_gateway);
     }
+
+    public static String getmStoragePath() {
+        return mStoragePath;
+    }
+
+    public static void setmStoragePath(String mStoragePath) {
+        AppContext.mStoragePath = mStoragePath;
+    }
+    
     
 }

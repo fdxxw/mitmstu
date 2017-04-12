@@ -4,6 +4,11 @@
     <string name="app_name">mitmstu</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <!-- 断网攻击 -->
 	<string name="broken_network_name">断网攻击</string>
 	<string name="broken_network_tips">对目标主机进行断网攻击，使其不能上网</string>
+	
+	<!-- 数据嗅探 -->
+	<string name="sniff_name">数据嗅探</string>
+	<string name="sniff_tips">获取被攻击主机的数据流量</string>
 </resources>
