@@ -10,6 +10,9 @@
 
 package com.github.fdxxw.mitmstu.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.github.fdxxw.mitmstu.common.AppContext;
 import com.github.fdxxw.mitmstu.utils.ShellUtils;
 
@@ -44,7 +47,11 @@ public class SniffService extends BaseService {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         
-        sniff_file_name = "tcpdump_" + System.currentTimeMillis() + ".pcap";
+        
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd:HH-mm-ss");
+        String date = df.format(new Date());
+        
+        sniff_file_name = "tcpdump_" + date + ".pcap";
         
         tcpdump_cmd = "tcpdump -w '" + AppContext.getmStoragePath() + "/" + sniff_file_name + "'" 
                 + " host " + AppContext.getTarget().getIp();
@@ -87,8 +94,8 @@ public class SniffService extends BaseService {
                 ShellUtils.execCommand("killall tcpdump", true, false, true);
             }
         }.start();
-        stopArpService();
         AppContext.isSniffRunning = false;
+        stopArpService();
     }
     
     	

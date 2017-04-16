@@ -38,7 +38,7 @@ public class BaseService extends Service {
      */
       	
     protected void stopArpService() {
-        if(!AppContext.isBrokenNetworkRunning && !AppContext.isSniffRunning) {
+        if(!AppContext.isBrokenNetworkRunning && !AppContext.isSniffRunning && !AppContext.isHijackRunning) {
             stopService(new Intent(this,ArpService.class));
         }
     }
@@ -50,9 +50,10 @@ public class BaseService extends Service {
      */
       	
     protected void startArpService() {
-        if(!AppContext.isBrokenNetworkRunning && !AppContext.isSniffRunning) {
+        if(!AppContext.isBrokenNetworkRunning && !AppContext.isSniffRunning && !AppContext.isHijackRunning) {
             Intent intent = new Intent(this,ArpService.class);
             intent.putExtra("arpCheatWay", ArpService.ONE_WAY_HOST);
+            intent.putExtra("ipForward", true);   //开启ip转发
             startService(intent);
         }
     }

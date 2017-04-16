@@ -11,4 +11,8 @@
 	<!-- 数据嗅探 -->
 	<string name="sniff_name">数据嗅探</string>
 	<string name="sniff_tips">获取被攻击主机的数据流量</string>
+	
+	<!-- 数据劫持 -->
+	<string name="hijack_name">数据劫持</string>
+	<string name="hijack_tips">劫持目标主机和外界的通信数据</string>
 </resources>

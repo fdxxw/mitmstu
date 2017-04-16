@@ -29,10 +29,12 @@
         <activity android:name="com.github.fdxxw.mitmstu.activity.MitmActivity"></activity>
         <activity android:name="com.github.fdxxw.mitmstu.activity.BrokenNetworkActivity" ></activity>
         <activity android:name="com.github.fdxxw.mitmstu.activity.SniffActivity"></activity>
+        <activity android:name="com.github.fdxxw.mitmstu.activity.HijackActivity"></activity>
         <!-- servies -->
         <service android:name="com.github.fdxxw.mitmstu.service.ArpService"></service>
         <service android:name="com.github.fdxxw.mitmstu.service.BaseService"></service>
         <service android:name="com.github.fdxxw.mitmstu.service.SniffService"></service>
+        <service android:name="com.github.fdxxw.mitmstu.service.ProxyService"></service>
         <uses-library android:name="android.test.runner" />
     </application>
 	<instrumentation android:name="android.test.InstrumentationTestRunner"

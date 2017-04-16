@@ -66,6 +66,11 @@ public class AppContext extends Application {
       	
     public static boolean isSniffRunning = false;
     
+    
+    /** nat转发是否在运行，默认不运行*/
+      	
+    public static boolean isHijackRunning = false;
+    
     /** 
      * 网卡接口名 ,example:eth0
      */  	

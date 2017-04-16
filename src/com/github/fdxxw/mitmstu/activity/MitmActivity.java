@@ -13,6 +13,7 @@ package com.github.fdxxw.mitmstu.activity;
 import com.github.fdxxw.mitmstu.R;
 import com.github.fdxxw.mitmstu.common.AppContext;
 import com.github.fdxxw.mitmstu.service.ArpService;
+import com.github.fdxxw.mitmstu.service.ProxyService;
 import com.github.fdxxw.mitmstu.service.SniffService;
 
 import android.app.Activity;
@@ -35,6 +36,7 @@ public class MitmActivity extends Activity implements OnClickListener{
         setContentView(R.layout.activity_mitm);
         findViewById(R.id.mitm_broken_network).setOnClickListener(this);
         findViewById(R.id.mitm_sniff).setOnClickListener(this);
+        findViewById(R.id.mitm_hijack).setOnClickListener(this);
     }
     
     	
@@ -60,6 +62,12 @@ public class MitmActivity extends Activity implements OnClickListener{
                 stopService(new Intent(MitmActivity.this,SniffService.class));
             }
             startActivity(new Intent(MitmActivity.this,SniffActivity.class));
+        }
+        case R.id.mitm_hijack : {
+            if(AppContext.isHijackRunning) {
+                stopService(new Intent(MitmActivity.this,ProxyService.class));
+            }
+            startActivity(new Intent(MitmActivity.this,HijackActivity.class));
         }
         default : break;
         }

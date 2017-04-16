@@ -45,6 +45,8 @@ public class ArpService extends Service {
       	
     private String arpSpoofCmd = null;
     
+    private String arpSpoofCmd2 = null;
+    
     /** arp欺骗线程*/
       	
     private Thread arpSpoof = null;
@@ -73,7 +75,7 @@ public class ArpService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         ShellUtils.execCommand("killall arpspoof", true, false, true);
         
-        ipForward = intent.getBooleanExtra("ipForward", true);
+        ipForward = intent.getBooleanExtra("ipForward", false);
         if(ipForward) {
             ShellUtils.execCommand(FORWARD_COMMANDS, true, false, true);
         } else {
@@ -99,6 +101,8 @@ public class ArpService extends Service {
             if(!targetIp.equals(AppContext.getGateway())) {
                 arpSpoofCmd = "arpspoof -i " + interfaceName + " -t " + targetIp 
                         + " " + AppContext.getGateway();
+                arpSpoofCmd2 = "arpspoof -i " + interfaceName + " -t " + AppContext.getGateway() 
+                        + " " + targetIp;
             } else {
                 arpSpoofCmd = "arpspoof -i " + interfaceName + " -t " + AppContext.getGateway()
                         + " " + targetIp;
@@ -108,6 +112,7 @@ public class ArpService extends Service {
                 @Override
                 public void run() {
                     ShellUtils.execCommand(arpSpoofCmd, true, false, false);
+                    ShellUtils.execCommand(arpSpoofCmd2, true, false, false);
                 }  
             };
             
@@ -131,6 +136,7 @@ public class ArpService extends Service {
         new Thread() {
             @Override
             public void run() {
+                ShellUtils.execCommand(UN_FORWARD_COMMANDS, true, false, true);
                 ShellUtils.execCommand("killall arpspoof", true, false, true);
             }
         }.start();
