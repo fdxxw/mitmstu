@@ -16,9 +16,11 @@ import java.net.SocketException;
 
 import com.github.fdxxw.mitmstu.entity.LanHost;
 import com.github.fdxxw.mitmstu.utils.NetworkUtils;
+import com.github.fdxxw.mitmstu.utils.ShellUtils;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Environment;
 
 /** 
@@ -34,6 +36,8 @@ import android.os.Environment;
  */ 
   	
 public class AppContext extends Application {
+    
+    private static SharedPreferences preferences = null;
     
     private Context mContext;
     
@@ -84,7 +88,7 @@ public class AppContext extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        
+        preferences = getSharedPreferences("app", Context.MODE_PRIVATE);
         mContext = this;
         mStoragePath = Environment.getExternalStorageDirectory().toString();
         
@@ -98,6 +102,7 @@ public class AppContext extends Application {
         int_ip = NetworkUtils.ipToint(mInetAddress.getHostAddress());
         int_net_mask = NetworkUtils.ipToint(NetworkUtils.getMaskFromBit(NetworkUtils.getMaskBitByIp(mInetAddress.getHostAddress())));
         int_gateway = NetworkUtils.ipToint(NetworkUtils.getGateway());
+        gatewayMac = NetworkUtils.getGatewayMac();
         try {
             netInterface = NetworkInterface.getByInetAddress(mInetAddress).getDisplayName();
             mac = NetworkUtils.byteMacToStr(NetworkInterface.getByInetAddress(mInetAddress).getHardwareAddress());
@@ -212,5 +217,27 @@ public class AppContext extends Application {
         AppContext.mStoragePath = mStoragePath;
     }
     
-    
+    public static void putString(String key, String value) {
+        preferences.edit().putString(key, value).commit();
+    }
+
+    public static String getString(String key, String defValue) {
+        return preferences.getString(key, defValue);
+    }
+
+    public static void putInt(String key, int value) {
+        preferences.edit().putInt(key, value).commit();
+    }
+
+    public static int getInt(String key, int defValue) {
+        return preferences.getInt(key, defValue);
+    }
+
+    public static void putBoolean(String key, Boolean value) {
+        preferences.edit().putBoolean(key, value).commit();
+    }
+
+    public static Boolean getBoolean(String key, Boolean value) {
+        return preferences.getBoolean(key, false);
+    }
 }

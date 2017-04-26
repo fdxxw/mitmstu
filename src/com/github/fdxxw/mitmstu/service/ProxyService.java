@@ -93,13 +93,13 @@ public class ProxyService extends BaseService {
         UN_HIJACK_CMD[0] = UN_ALTER_SOURCE_ADDRESS_CMD;
         UN_HIJACK_CMD[1] = UN_ALTER_TARGET_ADDRESS_CMD;
         
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("ddHHmm");
         String date = df.format(new Date());
         
         hijack_file_name = "hijack_" + date + ".pcap";
         
-        hijack_cmd = "tcpdump -w '" + AppContext.getmStoragePath() + "/" + hijack_file_name + "'" 
-                + " host " + AppContext.getTarget().getIp();
+        hijack_cmd = "tcpdump -w " + AppContext.getmStoragePath() + "/" + hijack_file_name + "" 
+                + "-l -A -s 0 -n 'host " + AppContext.getTarget().getIp() + "and tcp port 80 and (tcp[20:2]=0x4745 or top[20:2]=0x4854)'";
         
         startHiJack();
         return super.onStartCommand(intent, flags, startId);

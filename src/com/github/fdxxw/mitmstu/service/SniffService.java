@@ -48,7 +48,7 @@ public class SniffService extends BaseService {
     public int onStartCommand(Intent intent, int flags, int startId) {
         
         
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd:HH-mm-ss");
+        SimpleDateFormat df = new SimpleDateFormat("ddHHmm");
         String date = df.format(new Date());
         
         sniff_file_name = "tcpdump_" + date + ".pcap";

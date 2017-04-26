@@ -11,6 +11,10 @@
 package com.github.fdxxw.mitmstu.activity;
 
 import com.github.fdxxw.mitmstu.R;
+import com.github.fdxxw.mitmstu.common.AppContext;
+import com.github.fdxxw.mitmstu.utils.ShellUtils;
+import com.suke.widget.SwitchButton;
+import com.suke.widget.SwitchButton.OnCheckedChangeListener;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -29,6 +33,14 @@ public class MainActivity extends Activity {
     
     private Button scanLanBtn;
     
+    private SwitchButton protectSwitchButton;
+    
+    private String protect_cmds = String.format("arp -s %s %s", AppContext.getGateway(), AppContext.getGatewayMac());
+    
+    private String close_protect_cmds = String.format("arp -d %s", AppContext.getGateway());
+    
+    private boolean isProtected;
+    
     /**
      * Description 
      * @param savedInstanceState 
@@ -40,6 +52,26 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         scanLanBtn = (Button)findViewById(R.id.scan_lan_btn);
+        protectSwitchButton = (SwitchButton)findViewById(R.id.protect_switch_button);
+        isProtected = AppContext.getBoolean("is_protected", false);
+        protectSwitchButton.setChecked(isProtected);
+        
+        if(isProtected) {
+            ShellUtils.execCommand(protect_cmds, true, false, true);
+        }
+        
+        protectSwitchButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            
+            @Override
+            public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+                AppContext.putBoolean("is_protected", isChecked);
+                if (isChecked) {
+                    ShellUtils.execCommand(new String[] { close_protect_cmds, protect_cmds }, true, false, true);
+                } else {
+                    ShellUtils.execCommand(close_protect_cmds, true, false, true);
+                }
+            }
+        });
         scanLanBtn.setOnClickListener(new OnClickListener() {
             /**
              * Description 进入扫描局域网ui

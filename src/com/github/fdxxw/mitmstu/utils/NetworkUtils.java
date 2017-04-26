@@ -30,7 +30,26 @@ import android.util.Log;
 public class NetworkUtils {
     
     
-     
+      
+    /** 
+     * 获取网关MAC
+     * @author fdxxw ucmxxw@163.com
+     * @return  
+     */
+      	
+    public static String getGatewayMac() {
+         String gatewayMac = null;
+         ShellUtils.execCommand("ping -c 1 " + getGateway() , true, false, true);
+         CommandResult result = ShellUtils.execCommand("arp -a | grep " + getGateway(), false, true, true);
+         String[] msgs = result.successMsg.split("\\s");
+         for(String msg : msgs) {
+             if(msg.trim().matches("([A-Fa-f0-9]{2}:){5}[A-Fa-f0-9]{2}")) {
+                 gatewayMac = msg;
+                 break;
+             }
+         }
+         return gatewayMac;
+     }
       
     /** 
      * 获取网关地址

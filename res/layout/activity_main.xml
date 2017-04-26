@@ -4,7 +4,57 @@
     android:layout_height="match_parent"
     android:background="@color/grey2"
     tools:context="com.github.fdxxw.mitmstu.activity.MainActivity" >
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/navigation"
+        android:gravity="left"
+        android:orientation="horizontal"
+        android:padding="5.0dip" >
 
+        <TextView
+            android:id="@+id/main_open_protect_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingTop="2.0dip"
+            android:text="@string/enable_protection"
+            android:textColor="#ffff5926"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/main_open_protect_head"
+            android:layout_marginRight="80dp"
+            android:gravity="bottom|left|center"
+            android:text="@string/protection_tips"
+            android:textColor="#ffffffff"
+            android:textSize="14.0dip" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="12.0dip"
+            android:layout_marginRight="4.0dip"
+            android:layout_marginTop="12.0dip"
+            android:padding="1.0dip" >
+
+            <com.suke.widget.SwitchButton
+            android:id="@+id/protect_switch_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dip"/>
+        </RelativeLayout>
+    </RelativeLayout>
+	<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
     <Button android:id="@+id/scan_lan_btn"
 	    android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -17,5 +67,6 @@
             android:textSize="20sp"
             android:textStyle="bold" 
             android:background="@drawable/shape"/>
+    </RelativeLayout>
 
 </RelativeLayout>
