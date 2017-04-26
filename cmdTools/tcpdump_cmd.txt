@@ -1,0 +1,1 @@
+tcpdump -w tcpdump.txt -l -A -s 0 -n -i eth1 'tcp port 80 and ip[2:2] > 150 and (tcp[20:2]=0x4745 or top[20:2]=0x4854)'
