@@ -18,4 +18,6 @@
 	<!-- 主界面 -->
 	<string name="enable_protection">启用防护</string>
 	<string name="protection_tips">防御ARP欺骗攻击</string>
+	<string name="hijack_history_head">劫持历史</string>
+	<string name="hijack_history_tips">查看保存在本地的http数据劫持历史记录</string>
 </resources>

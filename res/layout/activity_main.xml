@@ -1,7 +1,8 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/grey2"
     tools:context="com.github.fdxxw.mitmstu.activity.MainActivity" >
     
@@ -11,7 +12,7 @@
         android:background="@color/navigation"
         android:gravity="left"
         android:orientation="horizontal"
-        android:padding="5.0dip" >
+        android:padding="10.0dip" >
 
         <TextView
             android:id="@+id/main_open_protect_head"
@@ -52,6 +53,42 @@
             android:layout_marginRight="20dip"/>
         </RelativeLayout>
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/selected" />
+    <RelativeLayout
+        android:id="@+id/hijack_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/navigation"
+        android:gravity="left"
+        android:orientation="horizontal"
+        android:padding="10.0dip" >
+
+        <TextView
+            android:id="@+id/main_hijack_history_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingTop="2.0dip"
+            android:text="@string/hijack_history_head"
+            android:textColor="#ffff5926"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/main_hijack_history_head"
+            android:layout_marginRight="80dp"
+            android:gravity="bottom|left|center"
+            android:text="@string/hijack_history_tips"
+            android:textColor="#ffffffff"
+            android:textSize="14.0dip" />
+
+        
+    </RelativeLayout>
+    
 	<RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -69,4 +106,4 @@
             android:background="@drawable/shape"/>
     </RelativeLayout>
 
-</RelativeLayout>
+</LinearLayout>

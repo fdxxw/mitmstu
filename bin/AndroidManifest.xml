@@ -5,6 +5,8 @@
     android:versionName="1.0" >
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="14" />
@@ -30,6 +32,8 @@
         <activity android:name="com.github.fdxxw.mitmstu.activity.BrokenNetworkActivity" ></activity>
         <activity android:name="com.github.fdxxw.mitmstu.activity.SniffActivity"></activity>
         <activity android:name="com.github.fdxxw.mitmstu.activity.HijackActivity"></activity>
+        <activity android:name="com.github.fdxxw.mitmstu.activity.HijackHistory"></activity>
+        <activity android:name="com.github.fdxxw.mitmstu.activity.LookHistory"></activity>
         <!-- servies -->
         <service android:name="com.github.fdxxw.mitmstu.service.ArpService"></service>
         <service android:name="com.github.fdxxw.mitmstu.service.BaseService"></service>

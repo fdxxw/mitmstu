@@ -62,6 +62,7 @@ public class MitmActivity extends Activity implements OnClickListener{
                 stopService(new Intent(MitmActivity.this,SniffService.class));
             }
             startActivity(new Intent(MitmActivity.this,SniffActivity.class));
+            break;
         }
         case R.id.mitm_hijack : {
             if(AppContext.isHijackRunning) {

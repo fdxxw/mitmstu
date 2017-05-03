@@ -17,6 +17,7 @@ import java.util.Enumeration;
 
 import org.apache.http.conn.util.InetAddressUtils;
 
+import com.github.fdxxw.mitmstu.activity.HostsActivity;
 import com.github.fdxxw.mitmstu.utils.ShellUtils.CommandResult;
 
 import android.util.Log;
@@ -39,8 +40,9 @@ public class NetworkUtils {
       	
     public static String getGatewayMac() {
          String gatewayMac = null;
-         ShellUtils.execCommand("ping -c 1 " + getGateway() , true, false, true);
-         CommandResult result = ShellUtils.execCommand("arp -a | grep " + getGateway(), false, true, true);
+         //ShellUtils.execCommand("ping -c 1 -w 0.5 " + getGateway() , true, false, true);
+         new UDPThread(getGateway()).start();
+         CommandResult result = ShellUtils.execCommand("arp -a " + getGateway(), false, true, true);
          String[] msgs = result.successMsg.split("\\s");
          for(String msg : msgs) {
              if(msg.trim().matches("([A-Fa-f0-9]{2}:){5}[A-Fa-f0-9]{2}")) {

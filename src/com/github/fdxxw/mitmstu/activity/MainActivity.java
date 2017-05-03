@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 /** 
  * @Description 主Activity
@@ -34,6 +35,8 @@ public class MainActivity extends Activity {
     private Button scanLanBtn;
     
     private SwitchButton protectSwitchButton;
+    
+    private View historyView;
     
     private String protect_cmds = String.format("arp -s %s %s", AppContext.getGateway(), AppContext.getGatewayMac());
     
@@ -53,6 +56,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         scanLanBtn = (Button)findViewById(R.id.scan_lan_btn);
         protectSwitchButton = (SwitchButton)findViewById(R.id.protect_switch_button);
+        
+        historyView = findViewById(R.id.hijack_history);
         isProtected = AppContext.getBoolean("is_protected", false);
         protectSwitchButton.setChecked(isProtected);
         
@@ -83,6 +88,15 @@ public class MainActivity extends Activity {
             public void onClick(View arg0) {
                 startActivity(new Intent(MainActivity.this, HostsActivity.class));
             }
+        });
+        
+        historyView.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				startActivity(new Intent(MainActivity.this, HijackHistory.class));
+			}
+        	
         });
     }
 }

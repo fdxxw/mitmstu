@@ -80,6 +80,8 @@ public class AppContext extends Application {
      */  	
     private static String netInterface;
     
+    private static HttpPacket lookHttpPacket;
+    
     /**
      * Description 程序入口  
      * @see android.app.Application#onCreate() 
@@ -91,7 +93,8 @@ public class AppContext extends Application {
         preferences = getSharedPreferences("app", Context.MODE_PRIVATE);
         mContext = this;
         mStoragePath = Environment.getExternalStorageDirectory().toString();
-        
+        String setPermisson_cmd = "chmod 777 " + mStoragePath;
+        ShellUtils.execCommand(setPermisson_cmd, true, false, true);
         initNetInfo();
     }
     
@@ -240,4 +243,14 @@ public class AppContext extends Application {
     public static Boolean getBoolean(String key, Boolean value) {
         return preferences.getBoolean(key, false);
     }
+
+	public static HttpPacket getLookHttpPacket() {
+		return lookHttpPacket;
+	}
+
+	public static void setLookHttpPacket(HttpPacket lookHttpPacket) {
+		AppContext.lookHttpPacket = lookHttpPacket;
+	}
+    
+    
 }

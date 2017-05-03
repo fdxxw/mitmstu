@@ -12,6 +12,10 @@ package com.github.fdxxw.mitmstu.activity;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -27,7 +31,6 @@ import com.github.fdxxw.mitmstu.common.WeakHandler;
 import com.github.fdxxw.mitmstu.entity.LanHost;
 import com.github.fdxxw.mitmstu.utils.NetworkUtils;
 import com.github.fdxxw.mitmstu.utils.ShellUtils;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -234,15 +237,15 @@ public class HostsActivity extends Activity {
      */ 
       	
     class ScanThread extends Thread {
-        /*ExecutorService executor;*/
+        ExecutorService executor;
         final static String ping = "ping -c 1 -w 0.5";   //ping 命令  -c发送次数  -w等待时间
         @Override
         public void run() {
-            /*if(null != executor && !executor.isShutdown()) {
+            if(null != executor && !executor.isShutdown()) {
                 executor.shutdown();
                 executor = null;
             }
-            executor = Executors.newFixedThreadPool(10);*/
+            executor = Executors.newFixedThreadPool(10);
             long next_int_ip = 0;
             try {
                 next_int_ip = AppContext.getInt_net_mask() & AppContext.getInt_gateway();
@@ -250,7 +253,8 @@ public class HostsActivity extends Activity {
                     next_int_ip = NetworkUtils.nextIntIp(next_int_ip);
                     if(next_int_ip != -1) {
                         String ip = NetworkUtils.intToIp2(next_int_ip);
-                        ShellUtils.execCommand(ping + " " + ip, false, false, true);
+                        //ShellUtils.execCommand(ping + " " + ip, false, false, true);
+                        executor.execute(new UDPThread(ip));
                         //Thread.sleep(500);
                     }
                 } 
@@ -258,6 +262,37 @@ public class HostsActivity extends Activity {
                 e.printStackTrace();
             }
         }
+    }
+    
+    /**
+     * 发送udp数据包
+     * @author fdxxw ucmxxw@163.com
+     * 
+     */
+    class UDPThread extends Thread {
+    	String target_ip;
+
+		public UDPThread(String target_ip) {
+			this.target_ip = target_ip;
+		}
+
+		public void run() {
+			DatagramSocket socket = null;
+			try {
+				socket = new DatagramSocket();
+				// Log.d(TAG, target_ip);
+				InetAddress address = InetAddress.getByName(target_ip);
+				DatagramPacket packet = new DatagramPacket("hello".getBytes(), "hello".length(), address, 137);
+				socket.setSoTimeout(200);
+				socket.send(packet);
+				socket.close();
+			} catch (UnknownHostException e) {
+			} catch (IOException e) {
+			} finally {
+				if (socket != null)
+					socket.close();
+			}
+		}
     }
     
     private void startScan() {
