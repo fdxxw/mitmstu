@@ -37,7 +37,10 @@
                 android:textColor="#ffffff"
                 android:textSize="15.0sp" />
         </RelativeLayout>
-        
+        <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/sideorbottom" />
         <ListView
             android:id="@+id/host_listview"
             android:layout_width="match_parent"

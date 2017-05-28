@@ -6,16 +6,17 @@ import com.github.fdxxw.mitmstu.common.HttpPacket;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Html;
 import android.widget.TextView;
 
-public class LookHistory extends Activity {
+public class LookHistory extends ActionBarActivity {
 	
 	private TextView lookView;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_look_history);
+		super.onCreate(savedInstanceState,R.layout.activity_look_history);
+		setBarTitle(Html.fromHtml("<b>" + getString(R.string.data_content) + "</b>"));
 		lookView = (TextView)findViewById(R.id.lookHistory);
 		HttpPacket httpPacket = AppContext.getLookHttpPacket();
 		lookView.setText("\nTime: " + httpPacket.getTime());

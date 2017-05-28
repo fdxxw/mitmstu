@@ -82,6 +82,8 @@ public class AppContext extends Application {
     
     private static HttpPacket lookHttpPacket;
     
+    private static DataFile lookDataFile;
+    
     /**
      * Description 程序入口  
      * @see android.app.Application#onCreate() 
@@ -251,6 +253,13 @@ public class AppContext extends Application {
 	public static void setLookHttpPacket(HttpPacket lookHttpPacket) {
 		AppContext.lookHttpPacket = lookHttpPacket;
 	}
-    
+
+	public static DataFile getLookDataFile() {
+		return lookDataFile;
+	}
+
+	public static void setLookDataFile(DataFile lookDataFile) {
+		AppContext.lookDataFile = lookDataFile;
+	}
     
 }

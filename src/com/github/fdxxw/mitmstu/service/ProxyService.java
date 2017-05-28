@@ -92,6 +92,8 @@ public class ProxyService extends BaseService {
         
     public static String hijack_file_name = null;
     
+    private Intent intent2 = new Intent("com.github.fdxxw.mitmstu.RECEIVER");
+    
     public Map<String,HttpPacket> dataMap = new HashMap<String,HttpPacket>();
     
     @Override
@@ -225,6 +227,8 @@ public class ProxyService extends BaseService {
                 HttpPacket httpPacket = null;
                 String line;
                 while ((line = br.readLine()) != null) {
+                    intent2.putExtra("message", line);  
+                    sendBroadcast(intent2);
                 	matcCut = pattCut.matcher(line);
                 	if(matcCut.find()) {
                 		if(httpPacket != null && httpPacket.getHost() != null) {
@@ -248,7 +252,7 @@ public class ProxyService extends BaseService {
     	if(httpPacket == null) {
     		httpPacket = new HttpPacket();
     	}
-    	String regxPath = "(.*?)GET(.*?)HTTP/1.1(.*?)";
+    	String regxPath = "(.*?)(GET|POST)(.*?)HTTP/1.1(.*?)";
     	String regxHost = "^(Host:).*?";
     	String regxConnection = "^(Connection:).*?";
     	String regxUserAgent = "^(User-Agent:).*?";
@@ -275,7 +279,7 @@ public class ProxyService extends BaseService {
     	Matcher matcAcceptCharset = pattAcceptCharset.matcher(line);
     	Matcher matcCookie = pattCookie.matcher(line);
     	if(matcPath.find()) {
-    		httpPacket.setPath(matcPath.group(2).trim());
+    		httpPacket.setPath(matcPath.group(3).trim());
     	} else if(matcHost.find()) {
     		httpPacket.setHost(line);
     	} else if(matcConnection.find()) {

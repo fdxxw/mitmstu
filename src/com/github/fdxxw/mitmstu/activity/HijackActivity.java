@@ -10,18 +10,21 @@
 
 package com.github.fdxxw.mitmstu.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
+import android.text.Html;
+import android.text.method.ScrollingMovementMethod;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.github.fdxxw.mitmstu.R;
 import com.github.fdxxw.mitmstu.common.AppContext;
 import com.github.fdxxw.mitmstu.entity.LanHost;
 import com.github.fdxxw.mitmstu.service.ProxyService;
-import com.github.fdxxw.mitmstu.service.SniffService;
 import com.suke.widget.SwitchButton;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.TextView;
-import android.widget.Toast;
 
 /** 
  * 数据劫持
@@ -29,19 +32,30 @@ import android.widget.Toast;
  * @date 2017年4月14日 下午9:26:19 
  */
 
-public class HijackActivity extends Activity {
+public class HijackActivity extends ActionBarActivity {
     
     private SwitchButton hijackSwitchButton;
     
     private TextView hijackInfoView;
     
+    private TextView hijackContentView;
+    private MsgReceiver msgReceiver; 
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hijack);
+        super.onCreate(savedInstanceState,R.layout.activity_hijack);
+        setBarTitle(Html.fromHtml("<b>" + getString(R.string.hijack_name) + "</b>"));
+        
+      //动态注册广播接收器  
+        msgReceiver = new MsgReceiver();  
+        final IntentFilter intentFilter = new IntentFilter();  
+        intentFilter.addAction("com.github.fdxxw.mitmstu.RECEIVER");  
+        registerReceiver(msgReceiver, intentFilter); 
+        
         hijackSwitchButton = (SwitchButton)findViewById(R.id.hijack_switch_button);
         hijackInfoView = (TextView)findViewById(R.id.hijack_info);
-        
+        hijackContentView = (TextView)findViewById(R.id.hijack_content);
+        hijackContentView.setMovementMethod(ScrollingMovementMethod.getInstance()); 
         if(AppContext.isHijackRunning) {
             hijackSwitchButton.setChecked(true);
         } else {
@@ -62,15 +76,37 @@ public class HijackActivity extends Activity {
             @Override
             public void onCheckedChanged(SwitchButton view, boolean isChecked) {
                 if(isChecked) {
+                	registerReceiver(msgReceiver, intentFilter);
                     startService(intent);
                 } else {
                     Toast.makeText(HijackActivity.this, 
                             "文件保存在" + AppContext.getmStoragePath() + "/"
                             + ProxyService.hijack_file_name, Toast.LENGTH_LONG).show();
                     stopService(intent);
+                    //注销广播  
+                    unregisterReceiver(msgReceiver);
                 }
             }
         });
         
     }
+    
+    @Override
+    protected void onDestroy() {
+    	super.onDestroy();
+    }
+    
+    /** 
+     * 广播接收器 
+     * 
+     */  
+    public class MsgReceiver extends BroadcastReceiver{  
+  
+		@Override
+		public void onReceive(Context arg0, Intent intent) {
+			String message = intent.getStringExtra("message");
+			hijackContentView.append("\n" + message);
+		}  
+          
+    }  
 }

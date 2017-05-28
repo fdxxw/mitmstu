@@ -31,6 +31,7 @@ import com.suke.widget.SwitchButton;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +42,7 @@ import android.widget.Toast;
  * @date 2017年4月6日 下午7:22:41 
  */
 
-public class SniffActivity extends Activity {
+public class SniffActivity extends ActionBarActivity {
     
     private SwitchButton sniffSwitchButton;
     
@@ -54,8 +55,8 @@ public class SniffActivity extends Activity {
     	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sniff);
+        super.onCreate(savedInstanceState,R.layout.activity_sniff);
+        setBarTitle(Html.fromHtml("<b>" + getString(R.string.sniff_name) + "</b>"));
         sniffInfoView = (TextView)findViewById(R.id.sniff_info); 
         sniffSwitchButton = (SwitchButton)findViewById(R.id.sniff_switch_button);
         

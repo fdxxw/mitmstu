@@ -11,20 +11,21 @@ import java.util.Set;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.fdxxw.mitmstu.R;
 import com.github.fdxxw.mitmstu.adapter.HistoryAdapter;
 import com.github.fdxxw.mitmstu.common.AppContext;
+import com.github.fdxxw.mitmstu.common.DataFile;
 import com.github.fdxxw.mitmstu.common.HttpPacket;
 import com.github.fdxxw.mitmstu.utils.FileUtils;
-public class HijackHistory extends Activity{
+public class HijackHistory extends ActionBarActivity{
 	
 	ListView historyListView;
 	
@@ -34,9 +35,12 @@ public class HijackHistory extends Activity{
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_hijack_history);
-		packetList = readAndParseData();
+		super.onCreate(savedInstanceState,R.layout.activity_hijack_history);
+		setBarTitle(Html.fromHtml("<b>" + getString(R.string.data_item) + "</b>"));
+		DataFile dataFile = AppContext.getLookDataFile();
+		if(dataFile != null) {
+			packetList = readAndParseData(dataFile.getFileName());
+		}
 		historyAdapter = new HistoryAdapter(packetList, this);
 		
 		historyListView = (ListView)findViewById(R.id.hijack_history_listview);
@@ -54,18 +58,15 @@ public class HijackHistory extends Activity{
 		});
 	}
 	
-	private static List<HttpPacket> readAndParseData() {
+	private static List<HttpPacket> readAndParseData(String fileName) {
 		List<HttpPacket> packetList = new ArrayList<HttpPacket>();
 		try { 
-			File f = new File(AppContext.getmStoragePath());
-			File[] files = f.listFiles();
-			for(File file : files) {
+			File file = new File(AppContext.getmStoragePath() + "/" + fileName);
 				if(!file.isDirectory() && file.getName().contains(".json")) {
 					String jsonStr = FileUtils.readData(file);
 					JSONObject jsonObject = JSON.parseObject(jsonStr);
 					packetList.addAll(toList(jsonObject));
 				}
-			}
 			//String jsonStr  = FileUtils.
 		} catch (Exception e) {
 			

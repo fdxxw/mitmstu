@@ -18,17 +18,25 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
-            android:orientation="vertical" >
+            android:orientation="vertical" 
+            >
 
             <TextView
-                android:id="@+id/host_name"
+                android:id="@+id/file_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left|center"
+                android:textColor="#ffff5926"
+                android:textSize="16.0dip"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/save_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="left|center"
                 android:textColor="#ffffffff"
                 android:textSize="16.0dip"
                 android:textStyle="bold" />
-
             </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

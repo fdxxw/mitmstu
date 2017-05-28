@@ -19,6 +19,7 @@ import com.github.fdxxw.mitmstu.service.SniffService;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -28,12 +29,12 @@ import android.view.View.OnClickListener;
  * @date 2017年3月22日 下午4:56:34 
  */
 
-public class MitmActivity extends Activity implements OnClickListener{
+public class MitmActivity extends ActionBarActivity implements OnClickListener{
     	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mitm);
+        super.onCreate(savedInstanceState,R.layout.activity_mitm);
+        setBarTitle(Html.fromHtml("<b>" + getString(R.string.attacker_ways) + "</b>"));
         findViewById(R.id.mitm_broken_network).setOnClickListener(this);
         findViewById(R.id.mitm_sniff).setOnClickListener(this);
         findViewById(R.id.mitm_hijack).setOnClickListener(this);

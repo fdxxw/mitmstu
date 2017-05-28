@@ -3,9 +3,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/grey2"
+    android:background="#ffffffff"
     tools:context="com.github.fdxxw.mitmstu.activity.MainActivity" >
-    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@drawable/topbar_bg" >
+
+        <ImageView
+            android:id="@+id/actionbar_logo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/actionbar_logo_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/actionbar_logo"
+            android:text="@string/app_name"
+            android:textColor="#ffffffff"
+            android:textSize="22sp" />
+
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,7 +38,7 @@
         android:gravity="left"
         android:orientation="horizontal"
         android:padding="10.0dip" >
-
+        
         <TextView
             android:id="@+id/main_open_protect_head"
             android:layout_width="match_parent"
@@ -50,7 +75,7 @@
             android:layout_height="wrap_content"
             
             android:layout_alignParentRight="true"
-            android:layout_marginRight="20dip"/>
+            android:layout_marginRight="15dip"/>
         </RelativeLayout>
     </RelativeLayout>
     <View
@@ -87,6 +112,24 @@
             android:textSize="14.0dip" />
 
         
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/selected" />
+	<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:background="@color/navigation">
+	    <TextView
+	            android:id="@+id/localhost_info"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:gravity="left"
+	            android:paddingLeft="10dip"
+	            android:paddingTop="10dip"
+	            android:textColor="#ffffffff"
+	            android:textSize="20sp" />
     </RelativeLayout>
     
 	<RelativeLayout

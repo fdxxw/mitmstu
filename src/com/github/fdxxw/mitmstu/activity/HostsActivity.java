@@ -31,10 +31,12 @@ import com.github.fdxxw.mitmstu.common.WeakHandler;
 import com.github.fdxxw.mitmstu.entity.LanHost;
 import com.github.fdxxw.mitmstu.utils.NetworkUtils;
 import com.github.fdxxw.mitmstu.utils.ShellUtils;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -46,7 +48,7 @@ import android.widget.ListView;
  * @date 2017年3月20日 上午10:22:52 
  */
 
-public class HostsActivity extends Activity {
+public class HostsActivity extends ActionBarActivity {
     
     private final static int DATA_CHANGED = 1;     //arp缓存改变
     private final static int DATA_HOST_ALIAS_CHANGED = 2;    //alias改变
@@ -82,8 +84,8 @@ public class HostsActivity extends Activity {
     	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hosts);
+        super.onCreate(savedInstanceState,R.layout.activity_hosts);
+        setBarTitle(Html.fromHtml("<b>" + getString(R.string.host_list) + "</b>"));
         netInterface = AppContext.getNetInterface();
         hostListView = (ListView)findViewById(R.id.host_listview);
         mCheckHosts = new ArrayList<LanHost>();

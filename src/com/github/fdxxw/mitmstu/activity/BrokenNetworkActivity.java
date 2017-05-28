@@ -19,6 +19,7 @@ import com.suke.widget.SwitchButton;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.widget.TextView;
 
 /** 
@@ -27,7 +28,7 @@ import android.widget.TextView;
  * @date 2017年3月30日 下午1:15:17 
  */
 
-public class BrokenNetworkActivity extends Activity {
+public class BrokenNetworkActivity extends ActionBarActivity {
     
     private TextView brokenNetInfo;
     
@@ -36,9 +37,9 @@ public class BrokenNetworkActivity extends Activity {
     private Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState,R.layout.activity_broken_network);
+        setBarTitle(Html.fromHtml("<b>" + getString(R.string.broken_network_name) + "</b>"));
         intent = new Intent(BrokenNetworkActivity.this, ArpService.class);
-        setContentView(R.layout.activity_broken_network);
         intent.putExtra("arpChratWay", ArpService.ONE_WAY_HOST);
         switchButton = (SwitchButton)findViewById(R.id.switch_button);  //开关
         
