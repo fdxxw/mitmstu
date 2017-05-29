@@ -305,10 +305,12 @@ public class NetworkUtils {
                 
                 sTemp = Integer.toHexString(0xFF &  macBytes[i]);
             }
-         value.append(sTemp+":");
+            if(i == macBytes.length-1) {
+            	value.append(sTemp);
+            } else {
+            	value.append(sTemp + ":");
+            }
         }
-          
-        value.substring(0,value.lastIndexOf(":"));
         return value.toString();
     } 
 

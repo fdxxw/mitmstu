@@ -5,7 +5,7 @@
     <string name="attacker_ways">选择攻击方式</string>
     <string name="data_file">数据文件</string>
     <string name="data_item">数据项</string>
-    <string name="data_content">数据项</string>
+    <string name="data_content">数据内容</string>
 
     <string name="app_name">mitmstu</string>
     <string name="hello_world">Hello world!</string>

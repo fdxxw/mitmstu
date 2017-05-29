@@ -101,20 +101,21 @@ public class AppContext extends Application {
     }
     
     public void initNetInfo() {
-        
         mInetAddress = NetworkUtils.getInetAddress();
-        
-        int_ip = NetworkUtils.ipToint(mInetAddress.getHostAddress());
-        int_net_mask = NetworkUtils.ipToint(NetworkUtils.getMaskFromBit(NetworkUtils.getMaskBitByIp(mInetAddress.getHostAddress())));
-        int_gateway = NetworkUtils.ipToint(NetworkUtils.getGateway());
-        gatewayMac = NetworkUtils.getGatewayMac();
-        try {
-            netInterface = NetworkInterface.getByInetAddress(mInetAddress).getDisplayName();
-            mac = NetworkUtils.byteMacToStr(NetworkInterface.getByInetAddress(mInetAddress).getHardwareAddress());
-        } catch (SocketException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        if(mInetAddress != null) {
+        	int_ip = NetworkUtils.ipToint(mInetAddress.getHostAddress());
+        	int_net_mask = NetworkUtils.ipToint(NetworkUtils.getMaskFromBit(NetworkUtils.getMaskBitByIp(mInetAddress.getHostAddress())));
+        	int_gateway = NetworkUtils.ipToint(NetworkUtils.getGateway());
+        	gatewayMac = NetworkUtils.getGatewayMac();
+        	try {
+        		netInterface = NetworkInterface.getByInetAddress(mInetAddress).getDisplayName();
+        		mac = NetworkUtils.byteMacToStr(NetworkInterface.getByInetAddress(mInetAddress).getHardwareAddress());
+        	} catch (SocketException e) {
+        		// TODO Auto-generated catch block
+        		e.printStackTrace();
+        	}
         }
+        
     }
 
 

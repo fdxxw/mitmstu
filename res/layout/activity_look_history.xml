@@ -8,5 +8,7 @@
     <TextView
         android:id="@+id/lookHistory" 
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textColor="#ffffffff"
+        android:textSize="14sp"/>
 </LinearLayout>

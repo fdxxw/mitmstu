@@ -10,31 +10,17 @@
 
 package com.github.fdxxw.mitmstu.activity;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-
-import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.codec.binary.StringUtils;
-
-import com.alibaba.fastjson.JSON;
-import com.github.fdxxw.mitmstu.R;
-import com.github.fdxxw.mitmstu.common.AppContext;
-import com.github.fdxxw.mitmstu.entity.LanHost;
-import com.github.fdxxw.mitmstu.ref.Pcap;
-import com.github.fdxxw.mitmstu.ref.PcapData;
-import com.github.fdxxw.mitmstu.ref.PcapParser;
-import com.github.fdxxw.mitmstu.service.SniffService;
-import com.github.fdxxw.mitmstu.utils.CommonUtils;
-import com.suke.widget.SwitchButton;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.fdxxw.mitmstu.R;
+import com.github.fdxxw.mitmstu.common.AppContext;
+import com.github.fdxxw.mitmstu.entity.LanHost;
+import com.github.fdxxw.mitmstu.service.SniffService;
+import com.suke.widget.SwitchButton;
 
 /** 
  * @Description 

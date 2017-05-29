@@ -10,20 +10,20 @@
 
 package com.github.fdxxw.mitmstu.activity;
 
-import com.github.fdxxw.mitmstu.R;
-import com.github.fdxxw.mitmstu.common.AppContext;
-import com.github.fdxxw.mitmstu.utils.ShellUtils;
-import com.suke.widget.SwitchButton;
-import com.suke.widget.SwitchButton.OnCheckedChangeListener;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.github.fdxxw.mitmstu.R;
+import com.github.fdxxw.mitmstu.common.AppContext;
+import com.github.fdxxw.mitmstu.common.ConfirmDialog;
+import com.github.fdxxw.mitmstu.common.ConfirmDialog.ClickListenerInterface;
+import com.github.fdxxw.mitmstu.utils.ShellUtils;
+import com.suke.widget.SwitchButton;
+import com.suke.widget.SwitchButton.OnCheckedChangeListener;
 
 /** 
  * @Description 主Activity
@@ -58,6 +58,22 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
        // setBarTitle(Html.fromHtml("<b>" + getString(R.string.app_name) + "</b>"));
         setContentView(R.layout.activity_main);
+        if(AppContext.getmInetAddress() == null) {
+        	final ConfirmDialog confirm = new ConfirmDialog(MainActivity.this, "系统提示", "确定", "没有连接WiFi网络", "取消");
+        	confirm.show();
+        	confirm.setClickListener(new ClickListenerInterface() {
+				
+				@Override
+				public void doConfirm() {
+					confirm.dismiss();
+				}
+				
+				@Override
+				public void doCancel() {
+					confirm.dismiss();
+				}
+			});
+        }
         scanLanBtn = (Button)findViewById(R.id.scan_lan_btn);
         protectSwitchButton = (SwitchButton)findViewById(R.id.protect_switch_button);
         localhostInfoView = (TextView)findViewById(R.id.localhost_info);
