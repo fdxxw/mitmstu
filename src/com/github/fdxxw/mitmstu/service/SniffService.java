@@ -27,7 +27,13 @@ import android.os.IBinder;
 
 public class SniffService extends BaseService {
     
-    
+	/** 开启ip转发 */
+  	
+    public static String[] START_IP_FORWARD = {
+            "iptables -t nat -F",
+            "iptables -F",
+            "iptables -X",
+            "iptables -P FORWARD ACCEPT"};
     
     /** 数据嗅探命令*/
       	
@@ -74,6 +80,7 @@ public class SniffService extends BaseService {
         tcpdump = new Thread() {
             @Override
             public void run() {
+            	ShellUtils.execCommand(START_IP_FORWARD, true, false, true);
                 ShellUtils.execCommand(tcpdump_cmd, true, false, false);
             }
         };

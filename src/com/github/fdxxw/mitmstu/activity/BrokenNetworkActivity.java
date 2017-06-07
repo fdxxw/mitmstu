@@ -46,7 +46,6 @@ public class BrokenNetworkActivity extends ActionBarActivity {
         if(AppContext.isBrokenNetworkRunning) {
             switchButton.setChecked(true);
         } else {
-            
             switchButton.setChecked(false);
         }
         brokenNetInfo = (TextView)findViewById(R.id.broken_network_info);
@@ -70,5 +69,11 @@ public class BrokenNetworkActivity extends ActionBarActivity {
                 }
             }
         });
+    }
+    
+    @Override
+    protected void onDestroy() {
+    	AppContext.isBrokenNetworkRunning = false;
+    	super.onDestroy();
     }
 }

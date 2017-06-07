@@ -46,10 +46,9 @@ public class SniffActivity extends ActionBarActivity {
         sniffInfoView = (TextView)findViewById(R.id.sniff_info); 
         sniffSwitchButton = (SwitchButton)findViewById(R.id.sniff_switch_button);
         
-        if(AppContext.isBrokenNetworkRunning) {
+        if(AppContext.isSniffRunning) {
             sniffSwitchButton.setChecked(true);
         } else {
-            
             sniffSwitchButton.setChecked(false);
         }
         
